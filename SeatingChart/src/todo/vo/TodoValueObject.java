@@ -69,8 +69,46 @@ public class TodoValueObject {
 	/** 直帰フラグ */
     private boolean nrFLG;
 
+    /** メールアドレスor携帯番号 */
+    private String post;
     
-    public int getEmployeeID() {
+    /** 連絡先の種類 */
+    private String detail;
+    
+    /** 電話番号 */
+    private String phoneID;
+    
+    /** 持ち出し先等のメモ */
+    private String memo;
+    
+    /** ステータス名 */
+    private String status;
+    
+    /** RGB12桁の色コード */
+    private String color;
+    
+    /** 部屋名 */
+    private String roomName;
+    
+    /** 部屋の横幅 */
+    private int width;
+    
+    /** 部屋の縦幅 */
+    private int height;
+    
+    /** メッセージのID */
+    private int bulletinID;
+    
+    /** メッセージの内容 */
+    private String bulletin;
+    
+    /** メッセージID */
+    private int messageID;
+
+    
+    
+
+	public int getEmployeeID() {
 		return employeeID;
 	}
 
@@ -228,6 +266,102 @@ public class TodoValueObject {
 
 	public void setNrFLG(boolean nrFLG) {
 		this.nrFLG = nrFLG;
+	}
+	
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public String getPhoneID() {
+		return phoneID;
+	}
+
+	public void setPhoneID(String phoneID) {
+		this.phoneID = phoneID;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getRoomName() {
+		return roomName;
+	}
+
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getBulletinID() {
+		return bulletinID;
+	}
+
+	public void setBulletinID(int bulletinID) {
+		this.bulletinID = bulletinID;
+	}
+
+	public String getBulletin() {
+		return bulletin;
+	}
+
+	public void setBulletin(String bulletin) {
+		this.bulletin = bulletin;
+	}
+
+	public int getMessageID() {
+		return messageID;
+	}
+
+	public void setMessageID(int messageID) {
+		this.messageID = messageID;
 	}
 
 }

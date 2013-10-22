@@ -38,7 +38,7 @@ public class TodoDAO extends CommonMySQLDAO {
 
 			vo.setFirstName(rs.getString("FirstName"));
 			vo.setLastName(rs.getString("LastName"));
-			vo.setLocalPhoneNumber(rs.getLocalPhoneNumber(LocalPhoneNumber));
+			vo.setLocalPhoneNumber(rs.getInt("localPhoneNumber"));
 			vo.setLeftX(rs.getInt("LeftX"));
 			vo.setLeftY(rs.getInt("leftY"));
 			vo.setRightX(rs.getInt("rightX"));

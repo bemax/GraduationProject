@@ -34,7 +34,7 @@ public class DetailServlet extends HttpServlet {
 		TodoValueObject vo;
 		try {
 			// タスク詳細結果を取得
-			vo = dao.detail(paramName);
+			vo = dao.getDetail(paramName);
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			throw new ServletException(e);
