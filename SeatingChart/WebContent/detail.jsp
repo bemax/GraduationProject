@@ -12,15 +12,61 @@
 </head>
 <body>
 <form id="sender" action="register" method="POST">
-<table border="1">
+<table>
 	<tr>
-		<th>名前</th>
-		<td>${vo.title}さん</td>
+		<th>氏　名=</th>
+		<td>${vo.firstName}さん</td>
 	</tr>
-	
 	<tr>
-		<th>状況</th>
-		<td>${vo.task}</td>
+		<th>内　線=</th>
+		<td>0000</td>
+	</tr>
+	<tr>
+		<th>状　態=</th>
+		<td>${vo.statusID}さん</td>
+	</tr>
+	<tr>
+		<th>行き先=</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>開　始=</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>終　了=</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>連絡先=</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>更　新=</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>-----メモ-----</th>
+	</tr>
+	<tr>
+		<th>月）</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>火）</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>水）</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>木）</th>
+		<td>　</td>
+	</tr>
+	<tr>
+		<th>金）</th>
+		<td>　</td>
 	</tr>
 </table>
 </form>

@@ -42,12 +42,11 @@ public class DetailServlet extends HttpServlet {
 			// DAOの処理が完了したら接続を閉じる
 			dao.closeConnection();
 		}
-
+		
 		// タスク１件のvoをリクエスト属性へバインド
 		request.setAttribute("vo", vo);
 
 		// 画面を返す
-		// 検索一覧を表示する
 		RequestDispatcher rd = request.getRequestDispatcher("/detail.jsp");
 		rd.forward(request, response);
 	}

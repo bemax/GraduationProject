@@ -26,7 +26,7 @@ public class SearchServlet extends HttpServlet {
 		// 入力内容を引数として渡す
 		String title = request.getParameter("title");
 		String task = request.getParameter("task");
-
+		String names = request.getParameter("names");
 
 		// voの作成
 		TodoValueObject vo = new TodoValueObject();
@@ -38,7 +38,7 @@ public class SearchServlet extends HttpServlet {
 		TodoDAO dao = new TodoDAO();
 		if(task != null){
 			try {
-				dao.registerUpdate(task,title);
+				dao.statusUpdate(task,names);
 			} catch (Exception e) {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
@@ -46,7 +46,7 @@ public class SearchServlet extends HttpServlet {
 		}
 		try {
 			// タスクのリストを一覧で取得し、リクエスト属性へ格納する
-			List<TodoValueObject> list = dao.todoList(title, task);
+			List<TodoValueObject> list = dao.todoList();
 			request.setAttribute("todoList", list);
 		} catch (Exception e) {
 			throw new ServletException(e);
