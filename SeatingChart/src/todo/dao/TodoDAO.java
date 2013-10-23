@@ -252,7 +252,7 @@ public class TodoDAO extends CommonMySQLDAO {
 		while (rs.next()) {
 
 			vo.setSendID(rs.getInt("SendID"));
-			vo.ReceiveID(rs.getInt("ReceiveID"));
+			vo.setReceiveID(rs.getInt("ReceiveID"));
 			vo.setMessage(rs.getString("Message"));
 			vo.setTime(rs.getTime("Time"));
 			vo.setBookMark(rs.getBoolean("BookMark"));

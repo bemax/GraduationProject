@@ -105,7 +105,21 @@ public class TodoValueObject {
     /** メッセージID */
     private int messageID;
 
+    /** 送信者ID */
+    private int SendID;
     
+    /** 送信先のID */
+    private int ReceiveID;
+
+    /** 送信時間 */
+    private Time Time;
+    
+    /** お気に入りフラグ */
+    private boolean BookMark;
+    
+    /** 既読 */
+    //既読
+
     
 
 	public int getEmployeeID() {
@@ -364,4 +378,37 @@ public class TodoValueObject {
 		this.messageID = messageID;
 	}
 
+	public int getSendID() {
+		return SendID;
+	}
+
+	public void setSendID(int sendID) {
+		SendID = sendID;
+	}
+
+	public int getReceiveID() {
+		return ReceiveID;
+	}
+
+	public void setReceiveID(int receiveID) {
+		ReceiveID = receiveID;
+	}
+
+	public Time getTime() {
+		return Time;
+	}
+
+	public void setTime(Time time) {
+		Time = time;
+	}
+
+	public boolean isBookMark() {
+		return BookMark;
+	}
+
+	public void setBookMark(boolean bookMark) {
+		BookMark = bookMark;
+	}
+
+	
 }
