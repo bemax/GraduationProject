@@ -151,7 +151,8 @@ public class TodoDAO extends CommonMySQLDAO {
 		TodoValueObject vo = new TodoValueObject();
 
 		//　マウスオーバーされた人の詳細情報を取得する
-		String sql = "SELECT FirstName , StatusID FROM seating.employee WHERE FirstName like ?";
+		String sql = "SELECT FirstName, LastName, IPAdress, ViewIP, ViewID, LocalPhoneNumber, StatusID," +
+		"Message, FROM seating.employee WHERE FirstName like ?";
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
 		PreparedStatement statement = getPreparedStatement(sql);
@@ -164,22 +165,27 @@ public class TodoDAO extends CommonMySQLDAO {
 		while (rs.next()) {
 
 			vo.setFirstName(rs.getString("firstName"));
+			vo.setLastName(rs.getString("lastName"));
+			vo.setIpAddress(rs.getString("IPAdress"));
+			vo.setViewIP(rs.getBoolean("ViewIP"));
+			vo.setViewID(rs.getBoolean("ViewID"));
+			vo.setLocalPhoneNumber(rs.getInt("LocalPhoneNumber"));
 			vo.setStatusID(rs.getInt("statusID"));
+			vo.setMessage(rs.getString("message"));
 		}
 		return vo;
 	}
 	
 	/**
-	 * 表示する掲示板IDを指定して、掲示板を返す。
-	 * @param firstName 表示対象者の名前(将来的にはＩＰアドレスなど一意な項目に変更)
+	 * 表示する掲示板IDを指定して、掲示板の内容を返す。
+	 * @param bulletinID
 	 * @return
 	 * @throws Exception
 	 */
 	public TodoValueObject getBulletin(int bulletinID) throws Exception {
 		TodoValueObject vo = new TodoValueObject();
 
-		//　マウスオーバーされた人の詳細情報を取得する
-		String sql = "SELECT Bulletin FROM seating.bulletin Bulletin WHERE bulletinID like ?";
+		String sql = "SELECT Bulletin FROM seating.bulletin WHERE bulletinID like ?";
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
 		PreparedStatement statement = getPreparedStatement(sql);
@@ -191,22 +197,20 @@ public class TodoDAO extends CommonMySQLDAO {
 		// 検索結果の行数分フェッチを行い、取得結果をValueObjectへ格納する
 		while (rs.next()) {
 
-			vo.setFirstName(rs.getString("firstName"));
-			vo.setStatusID(rs.getInt("statusID"));
+			vo.setBulletin(rs.getString("Bulletin"));
 		}
 		return vo;
 	}
 	
 	/**
 	 * 表示する部屋IDを指定して、部屋詳細を返す。
-	 * @param firstName 表示対象者の名前(将来的にはＩＰアドレスなど一意な項目に変更)
+	 * @param roomID
 	 * @return
 	 * @throws Exception
 	 */
 	public TodoValueObject getRoom(int roomID) throws Exception {
 		TodoValueObject vo = new TodoValueObject();
 
-		//　マウスオーバーされた人の詳細情報を取得する
 		String sql = "SELECT RoomName,Width,Height FROM seating.room WHERE RoomID like ?";
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
@@ -219,22 +223,22 @@ public class TodoDAO extends CommonMySQLDAO {
 		// 検索結果の行数分フェッチを行い、取得結果をValueObjectへ格納する
 		while (rs.next()) {
 
-			vo.setFirstName(rs.getString("firstName"));
-			vo.setStatusID(rs.getInt("statusID"));
+			vo.setRoomName(rs.getString("RoomName"));
+			vo.setWidth(rs.getInt("Width"));
+			vo.setHeight(rs.getInt("Height"));
 		}
 		return vo;
 	}
 	
 	/**
 	 * 表示する伝言を指定して、伝言詳細を返す。
-	 * @param firstName 表示対象者の名前(将来的にはＩＰアドレスなど一意な項目に変更)
+	 * @param MessageID
 	 * @return
 	 * @throws Exception
 	 */
 	public TodoValueObject getMessage(int messageID) throws Exception {
 		TodoValueObject vo = new TodoValueObject();
 
-		//　マウスオーバーされた人の詳細情報を取得する
 		String sql = "SELECT SendID,ReceiveID,Message,Time,BookMark,既読フラグ FROM seating.message WHERE messageID like ?";
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
@@ -247,22 +251,24 @@ public class TodoDAO extends CommonMySQLDAO {
 		// 検索結果の行数分フェッチを行い、取得結果をValueObjectへ格納する
 		while (rs.next()) {
 
-			vo.setFirstName(rs.getString("firstName"));
-			vo.setStatusID(rs.getInt("statusID"));
+			vo.setSendID(rs.getInt("SendID"));
+			vo.ReceiveID(rs.getInt("ReceiveID"));
+			vo.setMessage(rs.getString("Message"));
+			vo.setTime(rs.getTime("Time"));
+			vo.setBookMark(rs.getBoolean("BookMark"));
 		}
 		return vo;
 	}
 	
 	/**
 	 * 表示する連絡先を指定して、連絡先詳細を返す。
-	 * @param firstName 表示対象者の名前(将来的にはＩＰアドレスなど一意な項目に変更)
+	 * @param PhoneID
 	 * @return
 	 * @throws Exception
 	 */
 	public TodoValueObject getRentalPhone(int PhoneID) throws Exception {
 		TodoValueObject vo = new TodoValueObject();
 
-		//　マウスオーバーされた人の詳細情報を取得する
 		String sql = "SELECT EmployeeID,Memo FROM seating.RentalPhone WHERE PhoneID like ?";
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
@@ -275,8 +281,8 @@ public class TodoDAO extends CommonMySQLDAO {
 		// 検索結果の行数分フェッチを行い、取得結果をValueObjectへ格納する
 		while (rs.next()) {
 
-			vo.setFirstName(rs.getString("firstName"));
-			vo.setStatusID(rs.getInt("statusID"));
+			vo.setEmployeeID(rs.getInt("EmployeeID"));
+			vo.setMemo(rs.getString("Memo"));
 		}
 		return vo;
 	}
