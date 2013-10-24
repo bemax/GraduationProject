@@ -11,21 +11,24 @@
 		<table border="1">
 			<tr>
 				<td>入力者</td>
-				<td><textarea cols=40 rows=1 name="toAddr" style="overflow: hidden;">2341007@bemax.jp</textarea></td>
+				<td><textarea cols=40 rows=1 name="fromName" style="overflow: hidden;"></textarea></td>
 			</tr>
 			<tr>
 				<td>E-Mail</td>
-				<td><textarea cols=40 rows=1 name="fromAddr" style="overflow: hidden;">2341007@bemax.jp</textarea></td>
+				<td><textarea cols=40 rows=1 name="toAddr" style="overflow: hidden;"></textarea></td>
 			</tr>
 			<tr>
 				<td>タイトル</td>
-				<td><textarea cols=40 rows=1 name="subject" style="overflow: hidden;">test</textarea></td>
+				<td><textarea cols=40 rows=1 name="subject" style="overflow: hidden;"></textarea></td>
 			</tr>
 			<tr>
 				<td>内容</td>
-				<td><textarea cols=40 rows=5 name="message">test</textarea></td>
+				<td><textarea cols=40 rows=5 name="message"></textarea></td>
 			</tr>
 		</table>
+		メッセージの送信先:<br>
+		<input type="checkbox" name="a0" value="2341004@bemax.jp">伝言<br>
+		<input type="checkbox" name="a1" value="2341007@bemax.jp">登録したメールアドレス<br>
 		<input type="submit" value="送信">
 	</form>
 </body>

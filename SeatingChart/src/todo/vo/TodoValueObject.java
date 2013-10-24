@@ -118,7 +118,7 @@ public class TodoValueObject {
     private boolean BookMark;
     
     /** 既読 */
-    //既読
+    private boolean ReadFLR;
 
     
 
@@ -410,5 +410,14 @@ public class TodoValueObject {
 		BookMark = bookMark;
 	}
 
+	public boolean isReadFLR() {
+		return ReadFLR;
+	}
+
+	public void setReadFLR(boolean readFLR) {
+		ReadFLR = readFLR;
+	}
+
+	
 	
 }

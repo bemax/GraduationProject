@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import todo.log.Log;
 import todo.vo.TodoValueObject;
 
 public class TodoDAO extends CommonMySQLDAO {
@@ -17,12 +18,12 @@ public class TodoDAO extends CommonMySQLDAO {
 
 		// その部屋に登録されている人の名前や座標など執務室レイアウト表示に必要な情報を取得するsql
 		String sql = "SELECT emp.FirstName,emp.LastName,emp.LocalPhoneNumber," +
-				"emp.LeftX,emp.LeftY,emp.RightX,emp.RightY,room.Width,room.Height" +
-				"bul.Bulletin,sta.Status,sta.Color" +
-				"FROM seating.employee emp JOIN seating.Room room" +
-				"ON emp.RoomID = room.RoomID JOIN seating.Bulletin bul" +
-				"ON emp.RoomID = nul.RoomID JOIN seating.Status sta" +
-				"JOIN emp.StatusID = sta.StatusID";
+				"emp.LeftX,emp.LeftY,emp.RightX,emp.RightY,room.Width,room.Height," +
+				"bul.Bulletin,sta.Status,sta.Color " +
+				"FROM seating.Employee emp JOIN seating.Room room " +
+				"ON emp.RoomID = room.RoomID JOIN seating.Bulletin bul " +
+				"ON emp.RoomID = bul.RoomID JOIN seating.Status sta " +
+				"ON emp.StatusID = sta.StatusID";
 
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
@@ -38,11 +39,11 @@ public class TodoDAO extends CommonMySQLDAO {
 
 			vo.setFirstName(rs.getString("FirstName"));
 			vo.setLastName(rs.getString("LastName"));
-			vo.setLocalPhoneNumber(rs.getInt("localPhoneNumber"));
+			vo.setLocalPhoneNumber(rs.getInt("LocalPhoneNumber"));
 			vo.setLeftX(rs.getInt("LeftX"));
-			vo.setLeftY(rs.getInt("leftY"));
-			vo.setRightX(rs.getInt("rightX"));
-			vo.setRightY(rs.getInt("rightY"));
+			vo.setLeftY(rs.getInt("LeftY"));
+			vo.setRightX(rs.getInt("RightX"));
+			vo.setRightY(rs.getInt("RightY"));
 			vo.setWidth(rs.getInt("Width"));
 			vo.setHeight(rs.getInt("Height"));
 			vo.setBulletin(rs.getString("Bulletin"));
@@ -112,7 +113,7 @@ public class TodoDAO extends CommonMySQLDAO {
 	
 	/**
 	 * ステータスの更新処理を行う。
-	 * @param vo
+	 * @param statusID,names
 	 * @return
 	 * @throws Exception
 	 */
@@ -139,6 +140,85 @@ public class TodoDAO extends CommonMySQLDAO {
 		}
 
 		return result;
+	}
+	
+	/**
+	 *　掲示板の更新処理を行う。
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateBulletin(int bulletinID, String bulletin) throws Exception {
+		int result =0;
+		String sql = "UPDATE seating.bulletin SET Bulletin = ? WHERE BulletinID = ?";
+		// プリペアステートメントを取得し、実行SQLを渡す
+		try {
+			PreparedStatement statement = getPreparedStatement(sql);
+			statement.setString(1, bulletin);
+			statement.setInt(2, bulletinID);
+			result = statement.executeUpdate();
+			// コミットを行う
+			super.commit();
+		} catch (Exception e) {
+			super.rollback();
+			throw e;
+		}
+		return result;
+	}
+	
+	/**
+	 * 個人詳細情報削除処理を行う。指定されたEmployeeIDのタスクを削除する。
+	 * @param employeeID
+	 * @return 削除件数
+	 * @throws Exception
+	 */
+	public int deleteDetail(int employeeID) throws Exception {
+		String sql = "DELETE FROM seating.employee where EmployeeID = ?";
+
+		// SQLを実行してその結果を取得する。
+		int result = 0;
+		try {
+			// プリペアステートメントを取得し、実行SQLを渡す
+			PreparedStatement statement = getPreparedStatement(sql);
+			statement.setInt(1, employeeID);
+
+			result = statement.executeUpdate();
+
+			// コミットを行う
+			super.commit();
+		} catch (Exception e) {
+			super.rollback();
+			throw e;
+		}
+
+	return result;
+	}
+	
+	/**
+	 * 伝言削除処理を行う。指定されたMessageIDのタスクを削除する。
+	 * @param messageID
+	 * @return 削除件数
+	 * @throws Exception
+	 */
+	public int deleteMessage(int messageID) throws Exception {
+		String sql = "DELETE FROM seating.message where MessageID = ?";
+
+		// SQLを実行してその結果を取得する。
+		int result = 0;
+		try {
+			// プリペアステートメントを取得し、実行SQLを渡す
+			PreparedStatement statement = getPreparedStatement(sql);
+			statement.setInt(1, messageID);
+
+			result = statement.executeUpdate();
+
+			// コミットを行う
+			super.commit();
+		} catch (Exception e) {
+			super.rollback();
+			throw e;
+		}
+	return result;
 	}
 	
 	/**
