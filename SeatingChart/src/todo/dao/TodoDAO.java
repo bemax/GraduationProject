@@ -1,6 +1,3 @@
-/**
- *
- */
 package todo.dao;
 
 import java.sql.PreparedStatement;
@@ -111,6 +108,71 @@ public class TodoDAO extends CommonMySQLDAO {
 		return result;
 	}
 	
+	/**
+	 * 伝言登録処理を行う。(未完成)
+	 * @param message 入力された伝言内容。
+	 * @return 追加された件数
+	 * @throws Exception
+	 */
+	public int insertMessage(TodoValueObject vo) throws Exception {
+
+		String sql = "INSERT INTO seating.Message (MessageID,SendID," +
+				"ReceiveID,Message,Time,BookMark,ReadFLG) " +
+				"VALUES (?,?,?,?,?,?,?)";
+
+		int result = 0;
+		// プリペアステートメントを取得し、実行SQLを渡す
+		try {
+			PreparedStatement statement = getPreparedStatement(sql);
+			statement.setInt(1, vo.getEmployeeID());
+			statement.setString(2, vo.getFirstName());
+			statement.setString(3, vo.getLastName());
+
+			result = statement.executeUpdate();
+
+			// コミットを行う
+			super.commit();
+		} catch (Exception e) {
+			// ロールバックを行い、スローした例外はDAOから脱出する
+			super.rollback();
+			throw e;
+		}
+
+		return result;
+	}
+
+	/**
+	 * 連絡先登録処理を行う。
+	 * @param vo 入力されたタスク内容。
+	 * @return 追加された件数
+	 * @throws Exception
+	 */
+	public int insertSend(TodoValueObject vo) throws Exception {
+
+		String sql = "INSERT INTO seating.EmployeeDetail (EmployeeID,Post,Detail " +
+				"VALUES (?,?,?)";
+
+		int result = 0;
+		// プリペアステートメントを取得し、実行SQLを渡す
+		try {
+			PreparedStatement statement = getPreparedStatement(sql);
+			statement.setInt(1, vo.getEmployeeID());
+			statement.setString(2, vo.getFirstName());
+			statement.setString(3, vo.getLastName());
+
+			result = statement.executeUpdate();
+
+			// コミットを行う
+			super.commit();
+		} catch (Exception e) {
+			// ロールバックを行い、スローした例外はDAOから脱出する
+			super.rollback();
+			throw e;
+		}
+
+		return result;
+	}
+
 	/**
 	 * ステータスの更新処理を行う。
 	 * @param statusID,names
