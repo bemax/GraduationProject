@@ -1,3 +1,6 @@
+<%@page import="org.apache.catalina.connector.Request"%>
+<%@page import="java.util.List"%>
+<%@page import="todo.vo.TodoValueObject"%>
 <%@page import="sun.rmi.runtime.Log"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -19,6 +22,12 @@
 	<h2>○○部</h2>
 	苗字名前
 	<h3>○○課</h3>
+	<% 
+		List<TodoValueObject> list = (List<TodoValueObject>)request.getAttribute("todoList");
+		for(TodoValueObject vo : list){
+			System.out.println(vo.getFirstName());
+		}
+	%>
 	<div>
  		<form method="get" action="detail">
 			<table border="1" style="float: left">

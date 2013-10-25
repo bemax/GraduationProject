@@ -14,13 +14,7 @@ public class TodoDAO extends CommonMySQLDAO {
 		List<TodoValueObject> returnList = new ArrayList<TodoValueObject>();
 
 		// その部屋に登録されている人の名前や座標など執務室レイアウト表示に必要な情報を取得するsql
-		String sql = "SELECT emp.FirstName,emp.LastName,emp.LocalPhoneNumber," +
-				"emp.LeftX,emp.LeftY,emp.RightX,emp.RightY,room.Width,room.Height," +
-				"bul.Bulletin,sta.Status,sta.Color " +
-				"FROM seating.Employee emp JOIN seating.Room room " +
-				"ON emp.RoomID = room.RoomID JOIN seating.Bulletin bul " +
-				"ON emp.RoomID = bul.RoomID JOIN seating.Status sta " +
-				"ON emp.StatusID = sta.StatusID";
+		String sql = "SELECT FirstName,LastName FROM seating.Employee";
 
 		
 		// プリペアステートメントを取得し、実行SQLを渡す
@@ -36,7 +30,7 @@ public class TodoDAO extends CommonMySQLDAO {
 
 			vo.setFirstName(rs.getString("FirstName"));
 			vo.setLastName(rs.getString("LastName"));
-			vo.setLocalPhoneNumber(rs.getInt("LocalPhoneNumber"));
+			/**vo.setLocalPhoneNumber(rs.getInt("LocalPhoneNumber"));
 			vo.setLeftX(rs.getInt("LeftX"));
 			vo.setLeftY(rs.getInt("LeftY"));
 			vo.setRightX(rs.getInt("RightX"));
@@ -45,7 +39,7 @@ public class TodoDAO extends CommonMySQLDAO {
 			vo.setHeight(rs.getInt("Height"));
 			vo.setBulletin(rs.getString("Bulletin"));
 			vo.setStatus(rs.getString("Status"));
-			vo.setColor(rs.getString("Color"));
+			vo.setColor(rs.getString("Color"));*/
 
 			
 			returnList.add(vo);
@@ -109,7 +103,7 @@ public class TodoDAO extends CommonMySQLDAO {
 	}
 	
 	/**
-	 * 伝言登録処理を行う。(未完成)
+	 * 伝言登録処理を行う。(未完成[どこまで入力してもらうのか])
 	 * @param message 入力された伝言内容。
 	 * @return 追加された件数
 	 * @throws Exception
@@ -142,7 +136,7 @@ public class TodoDAO extends CommonMySQLDAO {
 	}
 
 	/**
-	 * 連絡先登録処理を行う。
+	 * 連絡先登録処理を行う。(未完成[どこまで入力してもらうのか])
 	 * @param vo 入力されたタスク内容。
 	 * @return 追加された件数
 	 * @throws Exception
