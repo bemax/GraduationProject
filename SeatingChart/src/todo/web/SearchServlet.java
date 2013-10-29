@@ -37,7 +37,7 @@ public class SearchServlet extends HttpServlet {
 			request.setAttribute("empList", list);
 			
 			// 部屋情報の取得
-			//List<TodoValueObject> room = dao.roomInfo(roomID);
+			//TodoValueObject room = dao.roomInfo(roomID);
 			//request.setAttribute("roomInfo", room);
 		} catch (Exception e) {
 			throw new ServletException(e);

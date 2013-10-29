@@ -1,3 +1,5 @@
+<%@page import="todo.vo.TodoValueObject"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,11 +10,17 @@
 </head>
 <body>
 
-<%
-//以下はリクエストから受け取った部屋名を元に、部屋の基本情報の値をデータベースから受け取った前提
+	<%
+		//ソースでコメントアウトしてるところがデータ取得の操作です
+		//TodoValueObject vo = (TodoValueObject)request.getAttribute("roomInfo");
+		//vo.getWidth();
+		//vo.getHeight();
+		
+		//以下はリクエストから受け取った部屋名を元に、部屋の基本情報の値をデータベースから受け取った前提
 		int width = 5;
 		int height = 6;
 
+		//String emp[][] = (String[][])request.getAttribute("empList");
 		String[][] b = { { "2442001", "有岡", "0", "0", "1", "2" },//0
 				{ "2442005", "矢田貝", "0", "2", "1", "1" },//1
 				{ "2442008", "竹内", "0", "3", "1", "1" },//2

@@ -40,8 +40,7 @@ public class TodoDAO extends CommonMySQLDAO {
 	}
 	
 	// 部屋情報の取得
-	public List<TodoValueObject> roomInfo(int roomID) throws Exception {
-		List<TodoValueObject> returnList = new ArrayList<TodoValueObject>();
+	public TodoValueObject roomInfo(int roomID) throws Exception {
 
 		String sql = "SELECT RoomName,Width,Height FROM seating.Room WHRER RoomID = ?";
 
@@ -58,10 +57,8 @@ public class TodoDAO extends CommonMySQLDAO {
 		vo.setRoomName(rs.getString("RoomName"));
 		vo.setWidth(rs.getInt("Width"));
 		vo.setHeight(rs.getInt("Height"));
-			
-		returnList.add(vo);
 		
-		return returnList;
+		return vo;
 	}
 
 

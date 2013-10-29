@@ -71,22 +71,37 @@
 			x = num % 5;
 			y = Math.floor(num / 5);
 
-			moveX = Math.abs(sZahyou[0]) - Math.abs(x);
-			moveY = Math.abs(sZahyou[1]) - Math.abs(y);
-			//四角にするときにここも変更してください
+			moveX = Math.abs(x) - Math.abs(sZahyou[0]);
+			moveY = Math.abs(y) - Math.abs(sZahyou[1]);
+
+			
 			if(Math.abs(base[0]) > Math.abs(moveX) || Math.abs(base[1]) > Math.abs(moveY)){
 				range.pop().style.color = "black";
 			}
 			
 			base = [moveX, moveY];
 			
-			for(var i = sZahyou[0]; i < sZahyou[0] + Math.abs(moveX); i++){
-				//byclasstagnameで
-				//classをつかつところに着けておく
-				for(var j = sZahyou[1]; j < sZahyou[1] + Math.abs(moveY); j++){
-					
+			// 四角く座標を取得する
+			if(sZahyou[0] > x){
+				ax = x;
+				bx = sZahyou[0];
+			}else{
+				ax = sZahyou[0];
+				bx = x;
+			}
+			if(sZahyou[1] > y){
+				ay = y;
+				by = sZahyou[1];
+			}else{
+				ay = sZahyou[1];
+				by = y;
+			}
+			for(var i = ay ;by >= i ;i++){
+				for(var j = ax;bx >= j;j++){
+					var id = j * 5 + i;
+					document.getElementById(id).firstChild.style.color = "red";
 				}
-			}	
+			}
 		} 
 		a = "移動量:" + moveX + "," + moveY;
 		document.getElementById("move").innerHTML = a;
