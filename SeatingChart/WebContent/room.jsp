@@ -11,7 +11,7 @@
 		sZahyou = [];
 		eZahyou = [];
 		nZahyou = [];
-		bZahyou = [ 0, 0 ];
+		base = [ 0, 0 ];
 		nbZahyou = [0,0];
 		flag = false;
 		mathFlag = false;
@@ -26,7 +26,8 @@
 		var y = e.clientY - document.getElementById("coorTable").offsetTop;
 		sZahyou[0] = Math.floor(x / 60);
 		sZahyou[1] = Math.floor(y / 60);
-		nbZahyou = sZahyou;
+		nbZahyou[0] = Math.floor(x / 60);
+		nbZahyou[1] = Math.floor(y / 60);
 		var box = "mousedown:" + sZahyou[0] + "," + sZahyou[1];
 		document.getElementById("down").innerHTML = box;
 	}
@@ -47,67 +48,52 @@
 		}
 	}
 
+	//重複する値があるかチェックする
+	var checkDuplicate = function(array, str){
+	    for(var i =0; i < array.length; i++){
+	        if(str == array[i]){
+	            return true;
+	        }
+	    }
+	    return false;
+	};
+	
 	function areaFunc(e) {
-
-		//このifはいらないかも
+		
 		if (flag) {
 			e.target.style.color = "red";
-			range.push(e.target);
-			var x = e.clientX - document.getElementById("coorTable").offsetLeft;
-			var y = e.clientY - document.getElementById("coorTable").offsetTop;
-
-			nZahyou[0] = Math.floor(x / 5);
-			nZahyou[1] = Math.floor(y / 60);
-
-			//今のベース座標が前のベース座標より小さくなったら選択範囲を狭める
-/*  			if (Math.abs(bZahyou[0]) > Math.abs(sZahyou[0]) - Math.abs(nZahyou[0])) {
-				if (mathFlag) {
-					bZahyou[0] -= 1;
-				} else {
-					bZahyou[0] += 1;
-				}
-			} else if (Math.abs(bZahyou[1]) > Math.abs(sZahyou[1]) - Math.abs(nZahyou[1])) {
-				if (mathFlag) {
-					bZahyou[1] -= 1;
-				} else {
-					bZahyou[1] += 1;
-				}
-			} */
-			
-			//x座標のベース座標との差を求める
-			if (nbZahyou[0] != nZahyou[0]){
-				console.log("nbZahyou[0]" + nbZahyou[0]);
-				nbZahyou[0] = nZahyou[0];
-				if (nZahyou[0] - sZahyou[0] > 0) {
-					bZahyou[0] += 1;
-					mathFlag = true;
-					console.log("baseの計算");
-				} else if (nZahyou[0] - sZahyou[0] < 0) {
-					bZahyou[0] -= 1;
-					mathFlag = false;
-					console.log("baseの計算");
-				}
+			if( !checkDuplicate(range, e.target) ){
+				range.push(e.target);
 			}
 			
-			if(nbZahyou[1] != nZahyou[1]){	
-				//y座標のベース座標との差を求める
-				nbZahyou[1] = nZahyou[1];
-				if (nZahyou[1] - sZahyou[1] > 0) {
-					bZahyou[1] += 1;
-					mathFlag = true;
-					console.log("baseの計算");
-				} else if (nZahyou[1] - sZahyou[1] < 0) {
-					bZahyou[1] -= 1;
-					mathFlag = false;
-					console.log("baseの計算");
-				}
+			var num = e.target.innerHTML;
+			
+			x = num % 5;
+			y = Math.floor(num / 5);
+
+			moveX = Math.abs(sZahyou[0]) - Math.abs(x);
+			moveY = Math.abs(sZahyou[1]) - Math.abs(y);
+			//四角にするときにここも変更してください
+			if(Math.abs(base[0]) > Math.abs(moveX) || Math.abs(base[1]) > Math.abs(moveY)){
+				range.pop().style.color = "black";
 			}
 			
-		}
-		a = "移動量:" + bZahyou[0] + "," + bZahyou[1];
+			base = [moveX, moveY];
+			
+			for(var i = sZahyou[0]; i < sZahyou[0] + Math.abs(moveX); i++){
+				//byclasstagnameで
+				//classをつかつところに着けておく
+				for(var j = ; j < 25; j++){
+					
+						
+					
+				}
+			}	
+		} 
+		a = "移動量:" + moveX + "," + moveY;
 		document.getElementById("move").innerHTML = a;
 
-		b = "移動座標:" + nZahyou[0] + "," + nZahyou[1];
+		b = "移動座標:" + x + "," + y;
 		document.getElementById("move2").innerHTML = b;
 	}
 </script>

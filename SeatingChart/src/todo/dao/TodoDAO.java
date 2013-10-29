@@ -10,40 +10,55 @@ import todo.vo.TodoValueObject;
 
 public class TodoDAO extends CommonMySQLDAO {
 	
-	public List<TodoValueObject> todoList() throws Exception {
-		List<TodoValueObject> returnList = new ArrayList<TodoValueObject>();
+	
 
-		// その部屋に登録されている人の名前や座標など執務室レイアウト表示に必要な情報を取得するsql
-		String sql = "SELECT FirstName,LastName FROM seating.Employee";
-
-		
+	
+	@SuppressWarnings("null")
+	//部屋IDを引数でとるようにします
+	public String[][] employeeList() throws Exception {
+		String returnList[][] = null;
+		int index = 0;
+		String sql = "SELECT EmployeeID,FirstName,LastName,TableX,TableY,Width,Height FROM seating.Employee ORDER BY TableX,TableY";
 		// プリペアステートメントを取得し、実行SQLを渡す
 		PreparedStatement statement = getPreparedStatement(sql);
 
 		// SQLを実行してその結果を取得する。
 		ResultSet rs = statement.executeQuery();
 		
-		
-		// 検索結果の行数分フェッチを行い、取得結果をValueObjectへ格納する
+		// 検索結果の行数分フェッチを行い、取得結果を格納する
 		while (rs.next()) {
-			TodoValueObject vo = new TodoValueObject();
-
-			vo.setFirstName(rs.getString("FirstName"));
-			vo.setLastName(rs.getString("LastName"));
-			/**vo.setLocalPhoneNumber(rs.getInt("LocalPhoneNumber"));
-			vo.setLeftX(rs.getInt("LeftX"));
-			vo.setLeftY(rs.getInt("LeftY"));
-			vo.setRightX(rs.getInt("RightX"));
-			vo.setRightY(rs.getInt("RightY"));
-			vo.setWidth(rs.getInt("Width"));
-			vo.setHeight(rs.getInt("Height"));
-			vo.setBulletin(rs.getString("Bulletin"));
-			vo.setStatus(rs.getString("Status"));
-			vo.setColor(rs.getString("Color"));*/
-
-			
-			returnList.add(vo);
+			returnList[index][0] = rs.getString("EmployeeID");
+			returnList[index][1] = rs.getString("FirstName");
+			returnList[index][2] = rs.getString("LastName");
+			returnList[index][3] = rs.getString("TableX");
+			returnList[index][4] = rs.getString("TableY");
+			returnList[index][5] = rs.getString("Width");
+			returnList[index][6] = rs.getString("Height");
+			index++;
 		}
+		return returnList;
+	}
+	
+	public List<TodoValueObject> roomInfo(int roomID) throws Exception {
+		List<TodoValueObject> returnList = new ArrayList<TodoValueObject>();
+
+		String sql = "SELECT RoomName,Width,Height FROM seating.Room WHRER RoomID = ?";
+
+		
+		// プリペアステートメントを取得し、実行SQLを渡す
+		PreparedStatement statement = getPreparedStatement(sql);
+		statement.setInt(1, roomID);
+
+		// SQLを実行してその結果を取得する。
+		ResultSet rs = statement.executeQuery();
+		
+		
+		TodoValueObject vo = new TodoValueObject();
+		vo.setRoomName(rs.getString("RoomName"));
+		vo.setWidth(rs.getInt("Width"));
+		vo.setHeight(rs.getInt("Height"));
+			
+		returnList.add(vo);
 		
 		return returnList;
 	}

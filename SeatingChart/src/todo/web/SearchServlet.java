@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.Session;
-
 import todo.dao.TodoDAO;
 import todo.vo.TodoValueObject;
 
@@ -24,39 +22,31 @@ public class SearchServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
-		// 入力内容を引数として渡す
-		String title = request.getParameter("title");
-		String task = request.getParameter("task");
-		String names = request.getParameter("names");
 
 		// voの作成
 		TodoValueObject vo = new TodoValueObject();
 
 		// タスク１件のvoをリクエスト属性へバインド
 		request.setAttribute("vo", vo);
-		
+
 		// DAOの取得
 		TodoDAO dao = new TodoDAO();
-		if(task != null){
-			try {
-				dao.statusUpdate(task,names);
-			} catch (Exception e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-		}
 		try {
-			// タスクのリストを一覧で取得し、リクエスト属性へ格納する
-			List<TodoValueObject> list = dao.todoList();
-			request.setAttribute("todoList", list);
+			// 社員一覧の配列を取得
+			String[][] list = dao.employeeList();
+			request.setAttribute("empList", list);
+			
+			// 部屋情報の取得
+			//List<TodoValueObject> room = dao.roomInfo(roomID);
+			//request.setAttribute("roomInfo", room);
 		} catch (Exception e) {
 			throw new ServletException(e);
+		} finally {
+			// DAOの処理が完了したら接続を閉じる
+			dao.closeConnection();
 		}
-		// DAOの処理が完了したら接続を閉じる
-		dao.closeConnection();
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/seating.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/search.jsp");
 		rd.forward(request, response);
 	}
 
