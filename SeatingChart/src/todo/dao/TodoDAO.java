@@ -14,7 +14,7 @@ public class TodoDAO extends CommonMySQLDAO {
 
 	
 	@SuppressWarnings("null")
-	//部屋IDを引数でとるようにします
+	// 将来的に部屋IDを引数でとるようにします
 	public String[][] employeeList() throws Exception {
 		String returnList[][] = null;
 		int index = 0;
@@ -39,6 +39,7 @@ public class TodoDAO extends CommonMySQLDAO {
 		return returnList;
 	}
 	
+	// 部屋情報の取得
 	public List<TodoValueObject> roomInfo(int roomID) throws Exception {
 		List<TodoValueObject> returnList = new ArrayList<TodoValueObject>();
 

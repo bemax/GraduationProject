@@ -83,9 +83,7 @@
 			for(var i = sZahyou[0]; i < sZahyou[0] + Math.abs(moveX); i++){
 				//byclasstagnameで
 				//classをつかつところに着けておく
-				for(var j = ; j < 25; j++){
-					
-						
+				for(var j = sZahyou[1]; j < sZahyou[1] + Math.abs(moveY); j++){
 					
 				}
 			}	
