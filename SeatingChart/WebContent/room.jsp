@@ -7,115 +7,105 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>座標</title>
 <script>
-	function load() {
+	function load() { //ページロード時にグローバル変数の宣言
+		// スタート地
 		sZahyou = [];
-		eZahyou = [];
-		nZahyou = [];
-		base = [ 0, 0 ];
-		nbZahyou = [0,0];
+		// マウスダウンされているかのフラグ
 		flag = false;
-		mathFlag = false;
+		// 選択範囲
 		range = [];
 	}
 	function myFunction(e) //マウスを押した場所の座標取得
 	{
 		flag = true;
 		e.target.style.color = "red";
-		range.push(e.target);
+		range[0] = e.target;
 		var x = e.clientX - document.getElementById("coorTable").offsetLeft;
 		var y = e.clientY - document.getElementById("coorTable").offsetTop;
 		sZahyou[0] = Math.floor(x / 60);
 		sZahyou[1] = Math.floor(y / 60);
-		nbZahyou[0] = Math.floor(x / 60);
-		nbZahyou[1] = Math.floor(y / 60);
-		var box = "mousedown:" + sZahyou[0] + "," + sZahyou[1];
-		document.getElementById("down").innerHTML = box;
 	}
 
 	function myFunction2(e) //マウスを離した場所の座標取得
 	{
-		var x = e.clientX - document.getElementById("coorTable").offsetLeft;
-		var y = e.clientY - document.getElementById("coorTable").offsetTop;
-		eZahyou[0] = Math.floor(x / 60);
-		eZahyou[1] = Math.floor(y / 60);
-		var box = "mouseup:" + eZahyou[0] + "," + eZahyou[1];
-		document.getElementById("up").innerHTML = box;
-		//ベース座標を初期化
-		bZahyou = [ 0, 0 ];
 		flag = false;
 		for ( var i = 0; i < range.length; ++i) {
 			range[i].style.color = "black";
+			var num = range[i].title;
+			var x = num % 5;
+			var y = Math.floor(num / 5);
+			console.log(x + "," + y);
 		}
+		// 終了座標
+		var x = Math.floor(e.clientX - document.getElementById("coorTable").offsetLeft/60);
+		var y = Math.floor(e.clientY - document.getElementById("coorTable").offsetTop/60);
 	}
 
-	//重複する値があるかチェックする
-	var checkDuplicate = function(array, str){
-	    for(var i =0; i < array.length; i++){
-	        if(str == array[i]){
-	            return true;
-	        }
-	    }
-	    return false;
-	};
-	
-	function areaFunc(e) {
-		
-		if (flag) {
-			e.target.style.color = "red";
-			if( !checkDuplicate(range, e.target) ){
-				range.push(e.target);
+	// 重複する値があるかチェックする
+	var checkDuplicate = function(array, str) {
+		for ( var i = 0; i < array.length; i++) {
+			if (str == array[i]) {
+				return true;
 			}
-			
-			var num = e.target.innerHTML;
-			
+		}
+		return false;
+	};
+
+	function areaFunc(e) {
+		// マウスダウンしていたら実行
+		if (flag) {
+
+			var num = e.target.title;
+			var count = 0;
+
+			// 現在地の座標を取得
 			x = num % 5;
 			y = Math.floor(num / 5);
 
-			moveX = Math.abs(x) - Math.abs(sZahyou[0]);
-			moveY = Math.abs(y) - Math.abs(sZahyou[1]);
-
-			
-			if(Math.abs(base[0]) > Math.abs(moveX) || Math.abs(base[1]) > Math.abs(moveY)){
-				range.pop().style.color = "black";
-			}
-			
-			base = [moveX, moveY];
-			
-			// 四角く座標を取得する
-			if(sZahyou[0] > x){
+			// スタート地と現在地の間の座標を取得
+			if (sZahyou[0] > x) {
 				ax = x;
 				bx = sZahyou[0];
-			}else{
+			} else {
 				ax = sZahyou[0];
 				bx = x;
 			}
-			if(sZahyou[1] > y){
+			if (sZahyou[1] > y) {
 				ay = y;
 				by = sZahyou[1];
-			}else{
+			} else {
 				ay = sZahyou[1];
 				by = y;
 			}
-			for(var i = ay ;by >= i ;i++){
-				for(var j = ax;bx >= j;j++){
-					var id = j * 5 + i;
-					document.getElementById(id).firstChild.style.color = "red";
+			for ( var i = ay; by >= i; i++) {
+				for ( var j = ax; bx >= j; j++) {
+					var id = i * 5 + j;
+					var ele = document.getElementById("coordiv" + id);
+					// 配列に重複する値がなければ色変更し配列に追加
+					if (!checkDuplicate(range, ele)) {
+						ele.style.color = "red";
+						range.push(ele);
+					}
+					count++;
 				}
 			}
-		} 
-		a = "移動量:" + moveX + "," + moveY;
-		document.getElementById("move").innerHTML = a;
 
-		b = "移動座標:" + x + "," + y;
-		document.getElementById("move2").innerHTML = b;
+			// 選択範囲が小さくなった時の処理
+			if (range.length > count) {
+				for ( var i = 1; i < range.length; ++i) {
+					range[i].style.color = "black";
+				}
+				var temp = range[0];
+				range.length = 0;
+				range[0] = temp;
+			}
+		}
+		;
 	}
 </script>
 </head>
 
 <body style="margin: 0px;" onload="load()">
-
-
-
 
 	<%!//新規登録された情報を受け取る
 	String[] x = { "5", "5", "201号室", "高度情報1年" };
@@ -139,13 +129,12 @@
 				for (int j = 0; w > j; j++) {
 			%>
 			<td align="center">
-				<div id="coordiv"
+				<div id="coordiv<%=h%>" title="<%=h%>"
 					style="width: 50px; height: 50px; border: 1px solid"
 					onmousedown="myFunction(event)" onmouseup="myFunction2(event)"
-					onmousemove="areaFunc(event)"><%=h%></div>
-					<%
- 						h++;
- 					%>
+					onmousemove="areaFunc(event)"><%=h%></div> <%
+ 	h++;
+ %>
 			</td>
 			<%
 				}
@@ -155,11 +144,6 @@
 			}
 		%>
 	</table>
-
-	<p id="down"></p>
-	<p id="up"></p>
-	<p id="move"></p>
-	<p id="move2"></p>
 
 	<form action="search" method="get">
 		<input type="hidden" id="downzahyou" name="downzahyou"> <input
